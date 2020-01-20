@@ -1,0 +1,36 @@
+Title: Don't accept being blocked
+Date: 2019-08-01 11:12
+Category: tech
+Tags: tech, skills
+Slug: blocked
+Authors: james
+Summary: Keeping momentum on a project and gaining new skills
+
+As a software engineer, I frequently encounter dependencies that force me to busy-wait. One of my first managers gave me some great advice that distilled to "don't accept being blocked."
+
+The set of things that force busy-waiting is infinite. Another team has to complete a feature or squash a bug; your infrastructure team has to configure additional networking; a product owner has to make a decision on the direction of a project; consensus must be gathered before adopting open source technology.
+
+The most remarkable engineers I have worked with are not "10x engineers," but people who quietly refuse to be blocked. Let's consider an interruption already mentioned - another team has to fix a bug before you can finish your work. Perhaps you are a frontend engineer and you find a response from a new backend service has an unexpected format. Though it may be a good exercise in handling exceptions, the rest of the logic won't work without a proper response. What do you do next? Chances are you use dependency injection in tests so you can continue writing code, but what happens when you're ready to test in production? What if you need to meet a release deadline? These questions can tease out whether or not your blocker is what I would label an "external blocker" or an "internal blocker."
+
+
+### External blockers
+
+This example of an API response not adhering to a specification is an "external blocker" - a blocker that requires the actions of others, likely on a separate team. Unless an engineer wants and can afford the time to ramp up on the cross team's stack, get a pull request approved, and perform a deploy to production without breaking other systems. This is not always feasible, considering deadlines and other responsibilities that engineer may have. In cases where an engineer can and does invest that time, learning occurs. This engineer has transformed an external blocker into an internal blocker.
+
+
+### Internal blockers
+
+An internal blocker is a hurdle that can be overcome by learning. A quick pair with a teammate, a message in Slack, a sketch, or a short meeting to review a diagram can help an engineer overcome an internal blocker. An internal blocker falls just outside of daily duty.
+
+For example - tuning databases, fixing bugs in infrastructure code/CI/CD, or meeting with a product owner to confirm details of a feature might be out of the usual scope of a backend engineer. Tuning databases likely should be left to a site reliability engineer. The infrastructure team is responsible for their own code and libraries. Product owners need to deliver clear vision. In practice, such lines of responsibilities between teams are blurred. Internal blockers are usually quick to overcome. When an engineer tackles an internal blocker, she learns a new skill. Knowledge is transferred, her entire team benefits, and if that hiccup is encountered again it no longer blocks progress. Learning databases in greater detail helps inform future decisions, fixing continuous integration code leads to deeper knowledge of how code gets deployed, working with product owners develops interpersonal skills.
+
+
+### What to do
+
+Becoming blocked and an engineers ability to move past being blocked are correlated with the general culture of the larger organization. If engineering and product are separate organizations, blocking may occur more frequently. If an engineer doesn't feel comfortable asking peers questions, blocking may occur. If engineers are squeezed into tight deadlines, blocking may occur as more senior engineers may be unable to lend time unblocking a peer.
+
+### tl;dr
+
+Internal blockers are not huge hurdles and most of the time offer themselves as learning opportunities. Time spent addressing external blockers must be balanced. The engineer from our first example might have to politic for the bug to be prioritized. Politics are external blockers, we are reliant on the actions of others.
+
+The role of an engineer extends beyond the job description. If teams are aligned on the same vision, they can chip in to fill gaps. This could mean anything from cutting JIRA tickets to setting up dashboards, to learning how bootstrapping works for new app instances. Tackle internal blockers, turn external blockers to internal blockers when you have time.
