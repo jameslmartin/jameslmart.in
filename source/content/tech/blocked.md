@@ -27,7 +27,7 @@ For example - tuning databases, fixing bugs in infrastructure code/CI/CD, or mee
 
 ### What to do
 
-Becoming blocked and an engineers ability to move past being blocked are correlated with the general culture of the larger organization. If engineering and product are separate organizations, blocking may occur more frequently. If an engineer doesn't feel comfortable asking peers questions, blocking may occur. If engineers are squeezed into tight deadlines, blocking may occur as more senior engineers may be unable to lend time unblocking a peer.
+Becoming blocked and an engineers ability to move past being blocked are correlated with the general culture of the larger organization. If engineering and product are separate organizations, blocking may occur more frequently. If an engineer doesn't feel comfortable asking peers questions, blocking may occur. If engineers are squeezed into tight deadlines, blocking may occur as more senior engineers may be unable to lend time to unblock.
 
 ### tl;dr
 

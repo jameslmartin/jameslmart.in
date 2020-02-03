@@ -12,7 +12,7 @@ First, I'm not a fan of maintaining different development environments on my mac
 
 A diagram of my Docker setup:  
 
-![picture of james]({static}../images/pelican_docker_setup.png)  
+![picture of docker setup]({static}../images/pelican_docker_setup.png)  
 
 For example, this command can be run when I'm in my running Docker container. This will regenerate the static files and serve the website at `localhost:8000`:
 ```
@@ -44,4 +44,4 @@ pelican-themes/
 
 The templates that the `simple` theme give you are a good place to start. You can then modify `site.css` to add styling to the classes and elements you create or change in the templates. As a heads up, the vanilla themes ship with lots of template HTML files. Decoding them may take a little bit of time, I'm a novice to Jinja templating so it took a fair bit of stepping through the files to get a feel for how things get generated. Hierarchically, `base.html` is the starting point for all your generated HTML pages. The header and footer of every page is defined here. Your menu, if you have one, is also located here. I found that these were the main components I had to work with. `article.html` will have the template of most of your posts. Articles are separate from pages. Pages do not have a by-line. "About" pages are an example.
 
-Another quirk of Pelican I discovered while modifying my theme is that code blocks, like the ones used above, are rendered into divs that do not play nicely with flex boxes.
+Another quirk of Pelican I discovered while modifying my theme is that code blocks, like the ones used above, are rendered into divs that do not play nicely with flex boxes. If you notice this page isn't as slick looking on mobile, it's likely because of how code blocks are rendered by Pelican. I'm considering digging deeper into this and submitting a PR.
