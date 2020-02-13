@@ -4,15 +4,15 @@ from __future__ import unicode_literals
 
 AUTHOR = 'james'
 SITENAME = 'jameslmart.in'
-SITEURL = 'http://localhost:8000'
+SITEURL = 'https://jameslmart.in'
 SITESUBTITLE = 'researcher, engineer, scientist'
 
 THEME = '/home/themes/mod'
 
 ARTICLE_URL = ('{slug}/')
-ARTICLE_SAVE_AS = ('{slug}.html')
+ARTICLE_SAVE_AS = ('{slug}/index.html')
 PAGE_URL = ('{slug}/')
-PAGE_SAVE_AS = ('{slug}.html')
+PAGE_SAVE_AS = ('{slug}/index.html')
 AUTHOR_URL = ('author/{name}/')
 AUTHOR_SAVE_AS = ('author/{name}/index.html')
 TAG_URL = ('tag/{name}/')

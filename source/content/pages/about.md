@@ -18,4 +18,4 @@ My research in graduate school, _BS/MS in Computer Science, UNC Chapel Hill 2016
 I spend a lot of time away from a keyboard - I'm a big fan of the sun and being outside. My friend Cole Weldon and I started an adventure cycling team, Ruffy Tuffy Crew. I'm a total bike and gear nerd, love trail running, and cook almost every meal with my partner Ariana. I have eclectic taste in music, enjoy simple board games, and general sporting, especially basketball. I love the intersection of design and all of these things.
 
 ### Reach out
-Feel free to send me mail at hi [at] jameslmart.in or drop me a message on LinkedIn or Instagram.
+Feel free to send me mail at hi [at] jameslmart.in or drop me a message on LinkedIn.
