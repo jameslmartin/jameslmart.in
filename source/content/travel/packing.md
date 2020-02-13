@@ -41,17 +41,17 @@ I can't say living out of a single 46L bag is easy and it took me lots of reflec
 - Nike running sweater: Also found at the Nike outlet, this is more for running and to wear when the Zara sweater starts to smell...)
 
 - My favorite button down/"flannel" like layer: From some random brand, I found this for a few dollars at the Goodwill off Lake Austin Boulevard in Austin. Works in too
-many situations to enumerate, from hiking to dressing up a t-shirt for a jazz show
+many situations to enumerate, from hiking to dressing up a t-shirt for a jazz show.
 
 - One longsleeve grey t-shirt
 
-- One white t-shirt: Bought for $1 at the PTA Thrift store in Carrboro, NC. Has some cool diving flags and says "Saint Martin." Looks nice enough :-)
+- One white t-shirt: Bought for $1 at the PTA Thrift store in Carrboro, NC. Has some cool diving flags and says "Saint Martin." Looks nice enough. :-)
 
 - One grey t-shirt
 
-- One black t-shirt: I run in this shirt but also wear it around if it's not dirty. I bought a second black t-shirt for ~$4 because I'm likely going to donate a few of the shirts I packed
+- One black t-shirt: I run in this shirt but also wear it around if it's not dirty. I bought a second black t-shirt for ~$4 because I'm likely going to donate a few of the shirts I packed.
 
-- One olive t-shirt: Really pilled/worn out, probably also found at the Lake Austin Goodwill
+- One olive t-shirt: Really pilled/worn out, probably also found at the Lake Austin Goodwill.
 
 - One quick-dry grey running t-shirt: I've since given to my girlfriend
 
@@ -75,11 +75,11 @@ many situations to enumerate, from hiking to dressing up a t-shirt for a jazz sh
 
 ###Shoes
 
-- Blundstone boots: I wear mine with shorts, pants, whatever. I wear them every day, in all conditions
+- Blundstone boots: I wear mine with shorts, pants, whatever. I wear them every day, in all conditions.
 
-- Converse All-Stars: I actually sent these home with my girlfriend's family when they left.
+- Converse All-Stars: I actually sent these home with my girlfriend's family when they left South Africa.
 
-- Asics DynaFlyte 4: This pair is my current road running shoe, I dig them and they're lightweight. I wear them on walks, runs, and as a style shoe, but after tackling some of the more technical trails here in Cape Town, I invested in a pair of Salomons. Good moves to preserve their longevity.
+- Asics DynaFlyte 4: This pair is my current road running shoe, I dig them and they're lightweight. I wear them on walks, runs, and as a style shoe, but after tackling some of the more technical trails here in Cape Town, I invested in a pair of Salomons.
 
 ###Miscellany
 I packed my favorite Ciele running hat, a gifted Roots travel scarf, and I picked up another hat on a road trip between Graskop and Johannesburg at the [Birds of Prey Rehabilitation Center](http://www.birdsofprey.co.za) in Dullstroom. I packed my Suunto Ambit3 Sport running watch, along with a few other accessories like a digital camera purchased on eBay and a spare burner cell phone. My girlfriend's mom also gave me a packable backpack from Target that has been great for daily use or fitting bulkier items like trail shoes/jacket/neck pillow when transferring.

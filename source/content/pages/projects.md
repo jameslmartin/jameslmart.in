@@ -6,11 +6,11 @@ Summary: Projects
 
 Outside my day jobs, I've worked on a few projects in a variety of roles.
 
-#### [a11 Radio](http://a11radio.com)
+#### [a11 Radio](http://live.a11radio.com)
 
 In Cape Town, South Africa I met up with Andrew Aitchison - a local South African running a weekly radio show out of [Max Bagels](https://www.maxbagels.com/) on Bree Street. We worked together over three weeks to elevate the web presence of the radio station and consider additional streaming technologies to enable the station to run independently.
 
-Three weeks is a short amount of software engineering time, so we decided to roll with a technology that Andrew can maintain himself.
+Three weeks is a short amount of software engineering time, but I built out a small streaming server using a hand-rolled nginx installation. It was quite fun to get set up and will be an ongoing project.
 
 #### [Superorganism](http://superorg.ca/about/)
 
