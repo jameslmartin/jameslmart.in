@@ -34,11 +34,11 @@ I can't say living out of a single 46L bag is easy and it took me lots of reflec
 
 - My girlfriend's Patagonia nanopuff: The packability is unmatched. Have only worn it a handful of times, but it will be useful in Europe.
 
-- A thrifted Zara sweater: $7 CAD at Value Village in Landsdowne. Probably the best/most versatile midweight/lightweight layer
+- A thrifted Zara sweater: $7 CAD at Value Village in Landsdowne. Probably the best/most versatile midweight/lightweight layer I packed.
 
 - A thrifted Patagonia capilene longsleeve: Not needed much in Cape Town summer, I'm holding on to this for cold European weather. It's cozy and comfy.
 
-- Nike running sweater: Also found at the Nike outlet, this is more for running and to wear when the Zara sweater starts to smell...)
+- Nike running sweater: Also found at the Nike outlet, this is more for running and to wear when the Zara sweater starts to smell...
 
 - My favorite button down/"flannel" like layer: From some random brand, I found this for a few dollars at the Goodwill off Lake Austin Boulevard in Austin. Works in too
 many situations to enumerate, from hiking to dressing up a t-shirt for a jazz show.
