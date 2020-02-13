@@ -43,7 +43,8 @@ AUTHOR_FEED_RSS = None
 # Blogroll
 LINKS = (('GitHub', 'https://github.com/jameslmartin'),
          ('Keybase', 'https://keybase.io/jlmartin'),
-         ('Instagram', 'https://www.instagram.com/jameslmartin/'))
+         ('Instagram', 'https://www.instagram.com/jameslmartin/'),
+         ('LinkedIn', 'https://www.linkedin.com/in/jamesloganmartin/'))
 
 
 DEFAULT_PAGINATION = 10
