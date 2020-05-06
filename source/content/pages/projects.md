@@ -6,7 +6,7 @@ Summary: Projects
 
 Outside my day jobs, I've worked on a few projects in a variety of roles.
 
-#### [a11 Radio](http://live.a11radio.com)
+#### [A11 Radio](http://a11radio.com)
 
 In Cape Town, South Africa I met up with Andrew Aitchison - a local South African running a weekly radio show out of [Max Bagels](https://www.maxbagels.com/) on Bree Street. We worked together over three weeks to elevate the web presence of the radio station and consider additional streaming technologies to enable the station to run independently.
 

@@ -26,6 +26,9 @@ dev: DOCKER_CMD=bash
 dev: run-docker
 dev: ## Run Docker image for Pelican to generate local content
 
+regen: ## Just regen files
+	pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
+
 serve: ## Regen and serve blog, to be run in the Docker container
 	pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
 	pelican -l /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0
