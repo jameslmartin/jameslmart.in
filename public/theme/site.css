@@ -1,0 +1,74 @@
+body {
+	font-family: "HelveticaNeue-Light",Helvetica,Arial,sans-serif;
+	color: #2E2C2F;
+	text-align: justify;
+	padding-left: 150px;
+	padding-right: 150px;
+}
+
+@media only screen and (max-width: 768px) {
+	body {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-weight: normal;
+  font-family: sans-serif;
+	color: inherit;
+}
+
+a {
+  color: black;
+	text-decoration: none;
+}
+
+a:hover {
+  color: #0074D9;
+}
+
+a:active {
+	text-decoration: underline;
+}
+
+.flex-container {
+	display: flex;
+  flex-flow: column wrap;
+	margin: 20px;
+}
+
+.flex-item {
+	flex: 1 1 auto;
+}
+
+#banner {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 0 1 auto;
+	align-items: baseline;
+	justify-content: space-between;
+	align-content: space-between;
+}
+
+#menu ul{
+	list-style: none;
+	padding-left: 0px;
+	justify-content: space-between;
+}
+
+.menu-page {
+	margin-right: 10px;
+}
+
+#post-list {
+	padding-inline-start: 20px;
+}
+
+#sitename {
+	text-align: left;
+}
+
+#sitename a {
+	text-decoration: underline;
+}
