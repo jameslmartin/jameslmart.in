@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'james'
 SITENAME = 'jameslmart.in'
-SITEURL = 'http://jameslmart.in'
+SITEURL = 'https://jameslmart.in'
 SITESUBTITLE = 'researcher, engineer, scientist'
 
 THEME = '/home/themes/mod'
