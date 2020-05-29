@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'james'
 SITENAME = 'jameslmart.in'
-SITEURL = 'http://localhost:8000'
+SITEURL = 'https://jameslmart.in'
 SITESUBTITLE = 'researcher, engineer, community advocate'
 
 THEME = '/home/themes/mod'
@@ -54,7 +54,6 @@ LINKS = (('GitHub', 'https://github.com/jameslmartin'),
          ('Keybase', 'https://keybase.io/jlmartin'),
          ('Instagram', 'https://www.instagram.com/jameslmartin/'),
          ('LinkedIn', 'https://www.linkedin.com/in/jamesloganmartin/'))
-
 
 DEFAULT_PAGINATION = 10
 
