@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'james'
 SITENAME = 'jameslmart.in'
-SITEURL = 'https://jameslmart.in'
+SITEURL = 'http://localhost:8000'
 SITESUBTITLE = 'researcher, engineer, scientist'
 
 THEME = '/home/themes/mod'
@@ -21,6 +21,8 @@ PATH = 'content'
 OUTPUT_PATH = 'public'
 STATIC_PATHS = ['images', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+PLUGIN_PATHS = ['/home/plugins']
+PLUGINS = ['dither','addressable_paragraphs']
 
 TIMEZONE = 'America/New_York'
 
@@ -39,6 +41,13 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
+
+# Plugins
+THRESHOLD = [96, 96, 96]
+TRANSPARENCY = True
+RESIZE_OUTPUT = True
+MAX_SIZE = (800, 800)
+DITHER_PALETTE = [(25,25,25),(75,75,75),(125,125,125),(175,175,175),(225,225,225),(250,250,250)]
 
 # Blogroll
 LINKS = (('GitHub', 'https://github.com/jameslmartin'),

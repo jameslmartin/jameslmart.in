@@ -4,7 +4,7 @@ Slug: about
 Authors: james
 Summary: About this site
 
-![picture of james]({static}../images/self2.png)  
+![picture of james]({static}../immune_images/self2.png)  
 ### Hi, I'm James
 I wear many hats but work with all sorts of backend technologies and data pipelines. I specialize in writing portable code for reproducible environments. I really enjoy working with Docker, Kubernetes, nginx, node, Python, Apache Airflow, and Jupyter. I'm happy tinkering with both digital and physical technologies.
 

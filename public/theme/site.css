@@ -72,3 +72,7 @@ a:active {
 #sitename a {
 	text-decoration: underline;
 }
+
+img {
+	padding: 2px;
+}

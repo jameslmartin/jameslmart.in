@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>jameslmart.in - Explorations with Pelican (part two)</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/site.css" />
+
+
+
+
+    <meta name="tags" content="tech" />
+    <meta name="tags" content="python" />
+    <meta name="tags" content="css" />
+
+</head>
+
+<body id="index" class="flex-container">
+        <div id="banner">
+          <div id="sitename">
+                  <h1><a href="http://localhost:8000/">jameslmart.in</a></h1>
+                  <strong>researcher, engineer, scientist</strong>
+          </div><!-- /#banner -->
+
+          <nav id="menu"><ul>
+              <span class="menu-page"><a href="http://localhost:8000/about/">About</a></span>
+              <span class="menu-page"><a href="http://localhost:8000/projects/">Projects</a></span>
+          </ul></nav><!-- /#menu -->
+        </div>
+<section class="flex-item">
+  <br>
+  <footer class="post-info">
+    <time class="published" datetime="2020-05-28T17:00:00-04:00">
+      Thu 28 May 2020
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="http://localhost:8000/author/james/">james</a>
+    </address>
+    <div class="category">
+        Category: <a href="http://localhost:8000/category/tech.html">tech</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="http://localhost:8000/tag/tech/">tech</a>
+            <a href="http://localhost:8000/tag/python/">python</a>
+            <a href="http://localhost:8000/tag/css/">css</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <header>
+    <h2 class="entry-title">
+      <a href="http://localhost:8000/pelican_part_two/" rel="bookmark"
+         title="Permalink to Explorations with Pelican (part two)">Explorations with Pelican (part two)</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>In my <a href="https://jameslmart.in/pelican">last post about Pelican</a> I mentioned my Docker setup and that I hadn't looked into livereloading. As it turns out, you only need one line to run the Pelican server with live reload. Previously I had this make command:</p>
+<div class="highlight"><pre><span></span><span class="c">serve: ## Regen and serve blog, to be run in the Docker container</span>
+<span class="c">    pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py</span>
+<span class="c">    pelican -l /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0</span>
+</pre></div>
+<p>I was doing some digging into the <code>tasks.py</code> file that ships with Pelican and found there was a <code>livereload</code> task. I wasn't exactly sure how that specific task gets invoked, but after a few google searches I found that was a recent feature merged in 2019. After another more thorough reading of <code>pelican --help</code>, I realized it's a flag. Duh.</p>
+<p>Now I run:</p>
+<div class="highlight"><pre><span></span><span class="c">serve: ## Serve blog with livereload, to be run in the Docker container</span>
+<span class="c">    pelican -lr /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0 &amp;</span>
+</pre></div>
+<p>When I'm in the running Docker container with my Python and Pelican environment to run the server with live reload. I bind the server to all the IP addresses on the local (virtual/Docker) machine and expose the port the Docker server runs on. I also background this process so I can continue to hack around the Docker container if need be.</p>
+<p>I also spent some time working with Pelican plugins. <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a> has a great method of reducing page size through dithering of images, and wrote a <a href="https://github.com/lowtechmag/solar-plugins/tree/master/dither">Pelican plugin</a> to perform dithering. Some images I want dithered, others I do not, but regardless I wanted to see what it takes to get plugins working.</p>
+<p>The first step I took was to poke around the plugin code itself. Luckily, Low Tech included a README for their plugin and specified which Python packages the plugin relied on. Since I'm working with Docker, I added an additional RUN command to my Dockerfile to perform a second <code>pip install</code>. Hopefully this allows Docker to cache build steps and not have to reinstall the Pelican wheel every time a dependency of a plugin gets changed. With the revised Dockerfile, I rebuilt my Pelican environment.</p>
+<p>The next step was to modify my make command to stand up said Pelican docker image to volume mount the directory containing the plugins. This process is exactly like the process I described to volume mount the themes directory. My Makefile simplifies these Docker commands, here's a snippet:</p>
+<div class="highlight"><pre><span></span><span class="n">run</span><span class="o">-</span><span class="n">docker</span><span class="p">:</span>
+    <span class="o">@-</span><span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="err">$</span><span class="p">(</span><span class="n">DOCKER_CONTAINER_NAME</span><span class="p">)</span>
+    <span class="o">@</span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="err">\</span>
+        <span class="err">$</span><span class="p">(</span><span class="n">DOCKER_OPTS</span><span class="p">)</span> <span class="err">\</span>
+        <span class="err">$</span><span class="p">(</span><span class="n">DOCKER_PORTS</span><span class="p">)</span> <span class="err">\</span>
+        <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">DOCKER_CONTAINER_NAME</span><span class="p">)</span> <span class="err">\</span>
+        <span class="o">--</span><span class="n">workdir</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">app</span><span class="o">/</span> <span class="err">\</span>
+        <span class="err">$</span><span class="p">(</span><span class="n">DOCKER_IMAGE</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">DOCKER_CMD</span><span class="p">)</span>
+
+<span class="n">build</span><span class="o">-</span><span class="n">pelican</span><span class="p">:</span> <span class="c1">## Build the latest Pelican image</span>
+    <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">pelican</span> <span class="o">-</span><span class="n">f</span> <span class="p">.</span><span class="o">/</span><span class="n">Dockerfile</span> <span class="p">.</span>
+
+<span class="n">dev</span><span class="p">:</span> <span class="n">DOCKER_CONTAINER_NAME</span><span class="o">=</span><span class="n">pelican</span>
+<span class="n">dev</span><span class="p">:</span> <span class="n">DOCKER_OPTS</span><span class="o">=-</span><span class="n">it</span> <span class="o">-</span><span class="n">v</span> <span class="ss">`pwd`</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">app</span><span class="o">/</span> <span class="err">\</span>
+    <span class="o">-</span><span class="n">v</span> <span class="ss">`pwd`</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">pelican</span><span class="o">-</span><span class="n">themes</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">themes</span> <span class="err">\</span>
+    <span class="o">-</span><span class="n">v</span> <span class="ss">`pwd`</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">pelican</span><span class="o">-</span><span class="n">plugins</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">plugins</span> <span class="err">\</span>
+    <span class="o">--</span><span class="n">workdir</span> <span class="o">/</span><span class="n">app</span><span class="o">/</span>
+<span class="n">dev</span><span class="p">:</span> <span class="n">DOCKER_PORTS</span><span class="o">=-</span><span class="n">p</span> <span class="err">$</span><span class="p">(</span><span class="n">APP_PORT</span><span class="p">):</span><span class="mi">8000</span>
+<span class="n">dev</span><span class="p">:</span> <span class="n">DOCKER_CMD</span><span class="o">=</span><span class="n">bash</span>
+<span class="n">dev</span><span class="p">:</span> <span class="n">run</span><span class="o">-</span><span class="n">docker</span>
+<span class="n">dev</span><span class="p">:</span> <span class="c1">## Run Docker image for Pelican to generate local content</span>
+</pre></div>
+<p>A <code>make dev</code> will now stand up and start a bash shell in a Python environment with Pelican and any dependencies installed; themes and plugins will be mounted horizontally to the blog content. Next, I modified the Pelican config at <code>pelicanconf.py</code> to specify the paths of the plugins and enable the ones that are mounted. I needed to add these lines, as well as a few others specific to the dither plugin:</p>
+<div class="highlight"><pre><span></span><span class="err">PLUGIN_PATHS = ['/home/plugins']</span>
+<span class="err">PLUGINS = ['dither','addressable_paragraphs']</span>
+</pre></div>
+<p>After a little hacking on the dither plugin, I now can either choose which images to dither, as well. Transparent diagrams are ruined by dithering but the plugin is incredibly useful for minimizing the footprint of the web pages.</p>
+  </div><!-- /.entry-content -->
+</section>
+        <hr width="66%" align="left" margin-left="10px">
+        <footer id="contentinfo" class="flex-item-footer">
+                <small>
+                Find me on...
+                <span class="social"><a href="https://github.com/jameslmartin">GitHub</a></span>
+                <span class="social"><a href="https://keybase.io/jlmartin">Keybase</a></span>
+                <span class="social"><a href="https://www.instagram.com/jameslmartin/">Instagram</a></span>
+                <span class="social"><a href="https://www.linkedin.com/in/jamesloganmartin/">LinkedIn</a></span>
+                </br>
+                <i>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a href="http://python.org">Python</a>.</i>
+                <small>
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

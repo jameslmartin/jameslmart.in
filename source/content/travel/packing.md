@@ -10,7 +10,7 @@ Packing light for a weekend trip can be tough, but packing a single bag for a th
 
 After another few months of traveling, I'm down to living out of a single bag - a [46L Osprey Porter](https://www.osprey.com/us/en/product/porter-46-PORTER46.html). It has some pretty nifty organization - lots of internal pockets and I got it second-hand on eBay for about $80. My girlfriend found the same bag second hand locally in Charlotte, NC for $40. A lot of these types of travel bags are already out there in great shape, so I would recommend buying used. The Porter specifically also has really nice straps that go across the front and cinch down. It's been really easy to take carry on.
 
-![osprey porter 46L closed]({static}../images/dithered_osprey_closed.png) ![osprey porter 46L open]({static}../images/dithered_osprey_pockets.png)
+![Osprey porter 46L closed]({static}../images/osprey_closed.png) ![Osprey porter 46L open]({static}../images/osprey_pockets.png)
 
 _My trusty Porter bag and its internal organization_  
 
