@@ -19,7 +19,7 @@
         <div id="banner">
           <div id="sitename">
                   <h1><a href="http://localhost:8000/">jameslmart.in</a></h1>
-                  <strong>researcher, engineer, scientist</strong>
+                  <strong>researcher, engineer, community advocate</strong>
           </div><!-- /#banner -->
 
           <nav id="menu"><ul>
@@ -53,18 +53,19 @@
  
   </header>
   <div class="entry-content">
-    <p>In my <a href="https://jameslmart.in/pelican">last post about Pelican</a> I mentioned my Docker setup and that I hadn't looked into livereloading. As it turns out, you only need one line to run the Pelican server with live reload. Previously I had this make command:</p>
-<div class="highlight"><pre><span></span><span class="c">serve: ## Regen and serve blog, to be run in the Docker container</span>
+    <p>In my <a href="https://jameslmart.in/pelican">last post about Pelican</a> I mentioned my Docker setup and that I hadn't looked into live reloading. As it turns out, you only need one line to run the Pelican server with live reload. Previously I had this <code>make</code> command:</p>
+<div class="highlight"><pre><span></span><span class="c">serve: ## Regen and serve blog, to be run in running Docker container</span>
 <span class="c">    pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py</span>
 <span class="c">    pelican -l /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0</span>
 </pre></div>
-<p>I was doing some digging into the <code>tasks.py</code> file that ships with Pelican and found there was a <code>livereload</code> task. I wasn't exactly sure how that specific task gets invoked, but after a few google searches I found that was a recent feature merged in 2019. After another more thorough reading of <code>pelican --help</code>, I realized it's a flag. Duh.</p>
+<p>I was doing some digging into the <code>tasks.py</code> file that ships with Pelican and found there was a <code>livereload</code> task. I wasn't exactly sure how that specific task gets invoked, but after a few google searches I found that it's a recent feature merged in 2019. After another more thorough reading of <code>pelican --help</code>, I realized it's just a flag that you pass when starting the server.</p>
 <p>Now I run:</p>
-<div class="highlight"><pre><span></span><span class="c">serve: ## Serve blog with livereload, to be run in the Docker container</span>
+<div class="highlight"><pre><span></span><span class="c">serve: ## Serve blog with livereload, to be run in running Docker container</span>
 <span class="c">    pelican -lr /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0 &amp;</span>
 </pre></div>
 <p>When I'm in the running Docker container with my Python and Pelican environment to run the server with live reload. I bind the server to all the IP addresses on the local (virtual/Docker) machine and expose the port the Docker server runs on. I also background this process so I can continue to hack around the Docker container if need be.</p>
-<p>I also spent some time working with Pelican plugins. <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a> has a great method of reducing page size through dithering of images, and wrote a <a href="https://github.com/lowtechmag/solar-plugins/tree/master/dither">Pelican plugin</a> to perform dithering. Some images I want dithered, others I do not, but regardless I wanted to see what it takes to get plugins working.</p>
+<h3>Plugins</h3>
+<p>I also spent some time working with Pelican plugins. <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a> has a great method of reducing page size through dithering of images, and wrote a <a href="https://github.com/lowtechmag/solar-plugins/tree/master/dither">Pelican plugin</a> to run the duthering. Some images I want dithered, others I do not, but regardless I wanted to see what it takes to get plugins working.</p>
 <p>The first step I took was to poke around the plugin code itself. Luckily, Low Tech included a README for their plugin and specified which Python packages the plugin relied on. Since I'm working with Docker, I added an additional RUN command to my Dockerfile to perform a second <code>pip install</code>. Hopefully this allows Docker to cache build steps and not have to reinstall the Pelican wheel every time a dependency of a plugin gets changed. With the revised Dockerfile, I rebuilt my Pelican environment.</p>
 <p>The next step was to modify my make command to stand up said Pelican docker image to volume mount the directory containing the plugins. This process is exactly like the process I described to volume mount the themes directory. My Makefile simplifies these Docker commands, here's a snippet:</p>
 <div class="highlight"><pre><span></span><span class="n">run</span><span class="o">-</span><span class="n">docker</span><span class="p">:</span>
@@ -94,6 +95,8 @@
 <span class="err">PLUGINS = ['dither','addressable_paragraphs']</span>
 </pre></div>
 <p>After a little hacking on the dither plugin, I now can either choose which images to dither, as well. Transparent diagrams are ruined by dithering but the plugin is incredibly useful for minimizing the footprint of the web pages.</p>
+<h3>TODO</h3>
+<p>My main next todo for improving the site is to fix the width of the "highlight" divs that Pelican generates for code blocks. They really ruin the responsiveness of the web pages where I put example code, like this one. Bear with me until I get it right.</p>
   </div><!-- /.entry-content -->
 </section>
         <hr width="66%" align="left" margin-left="10px">

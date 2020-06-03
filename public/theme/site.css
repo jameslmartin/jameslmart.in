@@ -2,8 +2,8 @@ body {
 	font-family: "HelveticaNeue-Light",Helvetica,Arial,sans-serif;
 	color: #2E2C2F;
 	text-align: justify;
-	padding-left: 150px;
-	padding-right: 150px;
+	padding-left: 20%;
+	padding-right: 20%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -73,6 +73,13 @@ a:active {
 	text-decoration: underline;
 }
 
-img {
-	padding: 2px;
+.scalable-img img {
+	padding-right: 2px;
+	width: 100%;
+	height: auto;
+}
+
+.img img {
+	padding-right: 4px;
+	align-self: center;
 }
