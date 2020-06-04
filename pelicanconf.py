@@ -15,7 +15,7 @@ PAGE_URL = ('{slug}/')
 PAGE_SAVE_AS = ('{slug}/index.html')
 AUTHOR_URL = ('author/{name}/')
 AUTHOR_SAVE_AS = ('author/{name}/index.html')
-TAG_URL = ('tag/{name}/')
+TAG_URL = ('tag/{name}.html')
 
 PATH = 'content'
 OUTPUT_PATH = 'public'
