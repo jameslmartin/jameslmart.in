@@ -32,6 +32,10 @@ a:active {
 	text-decoration: underline;
 }
 
+.entry-content a {
+	text-decoration: underline;
+}
+
 .flex-container {
 	display: flex;
   flex-flow: column wrap;
