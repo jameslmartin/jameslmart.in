@@ -29,8 +29,15 @@ dev: DOCKER_CMD=bash
 dev: run-docker
 dev: ## Run Docker image for Pelican to generate local content
 
+regen: DOCKER_CONTAINER_NAME=pelican
+regen: DOCKER_OPTS=-t -v `pwd`:/home/app/ \
+	-v `pwd`/../pelican-themes:/home/themes \
+	-v `pwd`/../pelican-plugins:/home/plugins \
+	--workdir /app/
+regen: DOCKER_CMD=pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
+regen: run-docker
 regen: ## Just regen files
-	pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
+
 
 serve: ## Serve blog with livereload, to be run in the Docker container
 	pelican -lr /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0

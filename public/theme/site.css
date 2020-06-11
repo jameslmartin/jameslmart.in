@@ -36,6 +36,10 @@ a:active {
 	text-decoration: underline;
 }
 
+.page-content a {
+	text-decoration: underline;
+}
+
 .flex-container {
 	display: flex;
   flex-flow: column wrap;
