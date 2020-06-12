@@ -19,8 +19,10 @@ TAG_URL = ('tag/{name}.html')
 
 PATH = 'content'
 OUTPUT_PATH = 'public'
-STATIC_PATHS = ['images', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/favicon.ico']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},
+  'extra/favicon.ico': {'path': 'favicon.ico'},
+}
 PLUGIN_PATHS = ['/home/plugins']
 PLUGINS = ['dither','addressable_paragraphs']
 
