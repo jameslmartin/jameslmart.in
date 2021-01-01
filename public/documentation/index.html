@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>jameslmart.in - Dear Lord, take minutes</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/site.css" />
+
+
+
+
+    <meta name="tags" content="tech" />
+    <meta name="tags" content="writing" />
+    <meta name="tags" content="remote" />
+    <meta name="tags" content="skills" />
+
+</head>
+
+<body id="index" class="flex-container">
+        <div id="banner">
+          <div id="sitename">
+                  <h1><a href="http://localhost:8000/">jameslmart.in</a></h1>
+                  <strong>researcher, engineer, community advocate</strong>
+          </div><!-- /#banner -->
+
+          <nav id="menu"><ul>
+              <span class="menu-page"><a href="http://localhost:8000/about/">About</a></span>
+              <span class="menu-page"><a href="http://localhost:8000/projects/">Projects</a></span>
+          </ul></nav><!-- /#menu -->
+        </div>
+<section class="flex-item">
+  <br>
+  <footer class="post-info">
+    <time class="published" datetime="2020-11-16T19:30:00-05:00">
+      Mon 16 November 2020
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="http://localhost:8000/author/james/">james</a>
+    </address>
+    <div class="category">
+        Category: <a href="http://localhost:8000/category/tech.html">tech</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="http://localhost:8000/tag/tech.html">tech</a>
+            <a href="http://localhost:8000/tag/writing.html">writing</a>
+            <a href="http://localhost:8000/tag/remote.html">remote</a>
+            <a href="http://localhost:8000/tag/skills.html">skills</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <header>
+    <h2 class="entry-title">
+      <a href="http://localhost:8000/documentation/" rel="bookmark"
+         title="Permalink to Dear Lord, take minutes">Dear Lord, take minutes</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>I've been reconnecting with some of my former co-workers and I've noticed an interesting thread across from these conversations. One person I've reconnected with was a former manager of mine who on my first day, tangentially related, sent me this short article on how <a href="https://opensource.com/article/17/7/state-systems-administration?imm_mid=0f591b&amp;cmp=em-webops-na-na-newsltr_20170818">dev ops is everyone's job</a>. Little did she know how impressionable this would be. I've taken to heart how backend engineers must be responsible for, or at least be knowledgable of, everything from the OS and runtime to the app code to monitoring and operating the code across deployment environments. While I could dedicate a separate blog post to this philosophy around operations, I want to focus on a similar trend I see emerging.</p>
+<p><strong>In 2020 <em>documentation</em> is everyone's job.</strong> COVID has forced all engineering organizations to be remote. The software industry may be well equipped to be remote with respect to tools - we already have competency using version control, tracking work with JIRA, and using Slack to meet virtually but the hard part of building software is rarely actually building the software. The hardest parts of building software are resource and coordination problems, especially keeping all involved parties up to date with the latest information. And these issues are exasperated when remote.</p>
+<p>While companies like GitLab have solid remote engineering practices and socialize them extensively, their model is not easily replicated across the industry. Building good remote culture takes additional process and a healthy amount of patience. As a tech lead on a small team, I've had to invest more heavily in project management and the tasks usually tackled by an engineering manager to fill communication gaps. My time is spent between clarifying the business impact of our work and balancing feature work with operational burden. Both tasks of tracking impact and making decisions are communication-heavy.</p>
+<p>Communicating decisions verbally is ineffective - the "why" behind decisions being made is easily lost. Slack isn't much better, and "although digital media appears to sustain memory, it is more like oral communication in its evanescence" (<a href="https://www.thenewatlantis.com/publications/the-analog-city-and-the-digital-city">Sacasas</a>). Where in an office we may have sat around our desks and debated development philosophy or drawn architecture diagrams on whiteboards to explain mental models, we lose the ad-hoc time when these concepts are communicated.</p>
+<h3>Start somewhere</h3>
+<p>When was the last time you were in a meeting where someone took minutes? The act of opening a Google Doc, writing down the date and time of the meeting, the attendees, and at least a brief summary of what will be discussed will anchor a meeting to stay on task. If you take that first step, you will probably continue to write down other useful information. If the person who is taking minutes shares their screen, others in the meeting can correct what is being written. Next meeting, rotate who takes minutes. When teammates debate a specific decision, write down the essence of the argument, the output, and next steps. Ask everyone involved in the meeting if they understand what was written down, what decision was reached, and if there are lingering ambiguities about next steps. Wait seven seconds before moving on, explicitly ask people who may usually not speak up. Sometimes there is no clear decision - experimentation is needed, and that's okay. The debate can be reopened once more information is gathered - link to previous minutes to create a trail.</p>
+<p>It doesn't have to be pretty, it just has to exist. A single place where collective understanding can be revisited is better than attempting to pass information orally.</p>
+<p>Additionally, architecture diagrams are always helpful. Where I may have drawn on a whiteboard during a meeting to explain a mental model, I now have to take time to sketch something using a web tool like <a href="https://app.diagrams.net/">draw.io</a> or <a href="https://sequencediagram.org/">sequencediagram.org</a>. Having some sort of picture as output of meetings really helps solidify what was discussed. These can be stored with minutes, in acceptance criteria of a work ticket, or in a shared directory of diagrams. These diagrams take longer to produce than a whiteboard and a marker, but that's okay. The act of writing these things down takes less time than orally re-explaining and rebuilding understanding.</p>
+<p>Since my team works primarily with AWS, our team downloaded the <a href="https://aws.amazon.com/architecture/icons/">AWS architecture icons</a> to quickly create diagrams. It's helpful to create a deck in something like Google Slides and make rudimentary diagrams with these icons and arrows. Proposing a new architecture can be as easy as duplicating a slide and adding new edges and nodes.</p>
+<h3>Templates help</h3>
+<p>Any sort of design template is helpful. Save a Google Doc with headings and have your teammates create a copy when a meeting starts. Create a sample slide deck with a link to the AWS icons. Make a dummy diagram. Pin a text file in Slack with a sample sequence diagram. Any starting place, any guidance, any framework is better than reinventing every time one is needed.</p>
+<h3>Accept slowing down</h3>
+<p>In the age of remote work, it's easy to lose our grounding in the physical realm. In <em>How To Do Nothing</em>, Jenny Odell quotes David Abram - "only in regular contact with the tangible ground and sky can we learn to orient and to navigate in the multiple dimensions that now claim us." We cannot rely on the ephemeral nature of Zoom and Slack to cement business and engineering decisions.</p>
+<p>Recall that writers and philosophers communicated with each other by writing and mailing letters. Not email but pen-and-paper letters that occupied the physical realm. Sacasas succinctly states "writing encourages a heightened precision of expression and a sequential and systematic ordering of ideas and arguments." I'm not suggesting we mail letters, but I am suggesting we shift focus from "move fast and break things" to sit still and write down your next steps and how you've arrived at them.</p>
+<p>Grounding ourselves in the physical act of writing meeting notes or drawing diagrams has a twofold benefit:
+1. we keep ourselves centered in the non-ephemeral
+2. we do others a service by better distributing information</p>
+<h3>This blog post is meta</h3>
+<p>Even this blog is an attempt to capture my mental model on how to improve knowledge sharing and decision making at work. Taking some time to write these thoughts has helped me orient myself towards being a more effective lead. But we also have to give ourselves a break. We're experiencing an unprecedented global pandemic and it's important we give ourselves a break. Information will be lost, and most systems can afford to be a little lossy.</p>
+  </div><!-- /.entry-content -->
+</section>
+        <hr width="66%" align="left" margin-left="10px">
+        <footer id="contentinfo" class="flex-item-footer">
+                <small>
+                Find me on...
+                <span class="social"><a href="https://github.com/jameslmartin" target="_blank">GitHub</a></span>
+                <span class="social"><a href="https://keybase.io/jlmartin" target="_blank">Keybase</a></span>
+                <span class="social"><a href="https://www.instagram.com/jameslmartin/" target="_blank">Instagram</a></span>
+                <span class="social"><a href="https://www.linkedin.com/in/jamesloganmartin/" target="_blank">LinkedIn</a></span>
+                </br>
+                <i>Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a>,
+                which takes great advantage of <a href="http://python.org" target="_blank">Python</a>.</i>
+                <small>
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

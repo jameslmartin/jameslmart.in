@@ -11,6 +11,8 @@ I wear many hats but work with all sorts of backend technologies and data pipeli
 #### Background
 I've spent time in an emerging technology research and development group at IBM and as a backend engineer in the Connected Fitness division of Under Armour. At IBM, I had the opportunity to work with some wonderful, smart people to automate training and deploying machine learning models. At Under Armour, I worked on almost all parts of two mobile app ecosystems, MapMyFitness and MyFitnessPal. I also spent some time product testing and providing feedback for the [HOVR](https://www.runnersworld.com/uk/gear/shoes/a25917965/under-armour-hovr-infinite-review/) line of connected running footwear.
 
+Most recently I've joined [Nuvalence](https://nuvalence.io/) as a consultant. I'm currently leading a team providing monitoring tooling for a new serverless enterprise platform of a Big Three automobile manufacturer.
+
 #### Research
 My research in graduate school, _BS/MS in Computer Science, UNC Chapel Hill 2016_, centered around data science, application development, and accessibility. The output of my graduate thesis was [`nbreader`](https://jameslmartin.github.io/jupyter-a11y/), an accessibility add-on for Project Jupyter.
 
