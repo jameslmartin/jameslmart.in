@@ -6,16 +6,16 @@ Summary: About this site
 
 ![small picture of james]({static}../immune_images/self2.png)  
 ### Hi, I'm James Martin
-I wear many hats but I am a backend software engineer by trade with a research background in Computer Science. Occasionally, I moonlight as a copyeditor for [Superorganism](https://superorg.ca).
+I am a backend software engineer by trade with a research background in Computer Science. Occasionally, I moonlight as a copyeditor for [Superorganism](https://superorg.ca).
 
-I also spend a lot of time away from a keyboard - I'm a big fan of the sun. While living in Central Texas, I started an adventure cycling team with my buddy Cole named Ruffy Tuffy Crew. I'm a bike and gear nerd, love trail running, and cook almost every meal with my partner Ariana. I enjoy eclectic music, simple board games, and athletics - especially basketball and World Tour pro cycling. I love the intersection of design and all of these things.
+I spend a lot of time away from a keyboard - I'm a big fan of the sun. While living in Central Texas, I started an adventure cycling team with my buddy Cole named Ruffy Tuffy Crew. I'm a bike and gear nerd, love trail running, and cook almost every meal with my partner Ariana. I enjoy eclectic music, simple board games, and athletics - especially basketball and World Tour pro cycling. I love the intersection of design and all of these things.
 
 #### Technology
-I'm comfortable working with backend technologies and data pipelines. I specialize in writing portable code for reproducible environments, as such I most enjoy working with Docker, Kubernetes, nginx, node, Python, Apache Airflow, and Jupyter. I'm happy tinkering with both digital and physical technologies.
+I'm comfortable working with backend technologies and data pipelines. I specialize in writing portable code for reproducible environments, and I most enjoy working with Docker, Kubernetes, nginx, node, Python, Apache Airflow, and Jupyter. I'm happy tinkering with both digital and physical technologies.
 
-I've spent time in an emerging technology research and development group at IBM and as an engineer at Under Armour Connected Fitness. At IBM, I had the opportunity to work with some wonderful, smart people to automate training and deploying machine learning models. At Under Armour, I worked on almost all parts of two mobile app ecosystems, MapMyFitness and MyFitnessPal. I also spent some time product testing and providing feedback for the [HOVR](https://www.runnersworld.com/uk/gear/shoes/a25917965/under-armour-hovr-infinite-review/) line of connected running footwear.
+I spent time in an emerging technology research and development group at IBM and as an engineer at Under Armour Connected Fitness. At IBM, I had the opportunity to work with some wonderful, smart people to automate training and deployment of machine learning models. At Under Armour, I worked on almost all parts of two mobile app ecosystems, MapMyFitness and MyFitnessPal. I also product tested and providing feedback for the [HOVR](https://www.runnersworld.com/uk/gear/shoes/a25917965/under-armour-hovr-infinite-review/) line of connected running footwear.
 
-Most recently I've joined [Nuvalence](https://nuvalence.io/) as a consultant. I'm currently leading a team providing monitoring tooling for a new serverless  platform of a Big Three automobile manufacturer.
+Most recently, I've joined [Nuvalence](https://nuvalence.io/) as a consultant. I'm currently leading a team providing monitoring tooling for a new serverless platform of a Big Three automobile manufacturer.
 
 #### Research
 My research in graduate school, _BS/MS in Computer Science, UNC Chapel Hill 2016_, explored the intersection of data science, application development, and accessibility. The output of my graduate thesis was [`nbreader`](https://jameslmartin.github.io/jupyter-a11y/), an accessibility add-on for Project Jupyter.
