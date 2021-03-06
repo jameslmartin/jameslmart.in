@@ -54,34 +54,35 @@
     <p>I dislike installing and maintaining runtime environments on my local machine. I much prefer isolated environments defined in code so I know exactly what versions of a runtime and exactly what dependencies are installed. You might get what I'm alluding to... Docker makes this dream a nice reality.</p>
 <p>However, when developing locally with multiple containerized applications, there are some gotchas when configuring them to talk to each other. A common pattern I use in local development is creating a containerized database and then a containerized application to read/write from that database. Minimal network configuration is needed if using something like Docker Compose, and the <a href="https://docs.docker.com/compose/networking/">documentation on networking with Compose</a> is quite clear. However, using Compose when iterating on a service can be quite clunky.</p>
 <p>One option to develop locally using Compose is to specify your database and applicaton like so (read the inline ## comments!!):</p>
-<div class="highlight"><pre><span></span><span class="n">version:</span> <span class="s">"3.5"</span>
-<span class="n">services:</span>
-  <span class="n">database:</span>  <span class="c1">## This service name will be a host name you can reach your db at from your server (i.e. postgres://user@database:5432)</span>
-    <span class="n">container_name:</span> <span class="n">postgres</span>  
-    <span class="n">image:</span> <span class="n">postgres:latest</span>
-    <span class="n">env_file:</span> <span class="n">db</span><span class="o">/</span><span class="n">database</span>.<span class="n">conf</span>
-    <span class="n">ports:</span>
-      - <span class="mi">5432</span>:<span class="mi">5432</span>
-    <span class="n">volumes:</span>
-      - <span class="n">db_volume:</span>/<span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">postgresql</span><span class="o">/</span><span class="n">data</span>
-      - <span class="nv">$PWD</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">init</span>/:/<span class="n">docker-entrypoint-initdb</span>.<span class="nb">d</span>
+<div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">"3.5"</span>
+<span class="n">services</span><span class="p">:</span>
+  <span class="k">database</span><span class="p">:</span>  <span class="c1">## This service name will be a host name you can reach your db at from your server</span>
+  <span class="c1">## or containers running on the same network (i.e. postgres://user@database:5432)</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">postgres</span>  
+    <span class="n">image</span><span class="p">:</span> <span class="n">postgres</span><span class="p">:</span><span class="n">latest</span>
+    <span class="n">env_file</span><span class="p">:</span> <span class="n">db</span><span class="o">/</span><span class="k">database</span><span class="p">.</span><span class="n">conf</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">5432</span><span class="p">:</span><span class="mi">5432</span>
+    <span class="n">volumes</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">db_volume</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">postgresql</span><span class="o">/</span><span class="n">data</span>
+      <span class="o">-</span> <span class="err">$</span><span class="n">PWD</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">init</span><span class="o">/</span><span class="p">:</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">entrypoint</span><span class="o">-</span><span class="n">initdb</span><span class="p">.</span><span class="n">d</span>
 
-  <span class="n">server:</span>   <span class="c1">## This service name will be the host name you can reach your server at (i.e. http://server:8080)</span>
-    <span class="n">container_name:</span> <span class="n">server</span>   
-    <span class="n">image:</span> <span class="n">server:latest</span>   <span class="c1">## You, of course, have to build this `server` image first</span>
-    <span class="n">env_file:</span> .<span class="n">env</span>
-    <span class="n">ports:</span>
-      - <span class="mi">8080</span>:<span class="mi">8080</span>
-    <span class="n">depends_on:</span>            <span class="c1">## depends_on doesn't always work entirely as expected, especially with Postgres in particular</span>
-      - <span class="n">database</span>
+  <span class="n">server</span><span class="p">:</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">server</span>   
+    <span class="n">image</span><span class="p">:</span> <span class="n">server</span><span class="p">:</span><span class="n">latest</span>   <span class="c1">## You, of course, have to build this `server` image first</span>
+    <span class="n">env_file</span><span class="p">:</span> <span class="p">.</span><span class="n">env</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8080</span><span class="p">:</span><span class="mi">8080</span>
+    <span class="n">depends_on</span><span class="p">:</span>            <span class="c1">## depends_on doesn't always work entirely as expected, especially with Postgres in particular</span>
+      <span class="o">-</span> <span class="k">database</span>
 
-<span class="n">networks:</span>
-  <span class="n">default:</span>
-    <span class="n">external:</span>
-      <span class="n">name:</span> <span class="n">application</span>    <span class="c1">## This `application` network is defined as "external," meaning it must be created before</span>
+<span class="n">networks</span><span class="p">:</span>
+  <span class="k">default</span><span class="p">:</span>
+    <span class="n">external</span><span class="p">:</span>
+      <span class="n">name</span><span class="p">:</span> <span class="n">application</span>    <span class="c1">## This `application` network is defined as "external," meaning it must be created before</span>
 
-<span class="n">volumes:</span>
-  <span class="n">db_volume:</span>
+<span class="n">volumes</span><span class="p">:</span>
+  <span class="n">db_volume</span><span class="p">:</span>
 </pre></div>
 <p>With your <code>application</code> network created and your <code>server</code> Docker image built, if all goes well, Compose will create the Postgres container and the server container on the <code>application</code> network. It will make Postgres available on the host name <code>database</code> and make the server available on the hostname <code>server</code> (here's the kicker) <em>within the <code>application</code> Docker network</em>.</p>
 <p>From your local machine, <code>http://server:8080</code> is not accessible. I believe this is the case because the Compose will modify a <code>/etc/hosts</code> file that is <em>shared by the containers of the network</em> but not shared with your own local machine.</p>
