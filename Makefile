@@ -16,7 +16,7 @@ run-docker:
 		--workdir /home/app/ \
 		$(DOCKER_IMAGE) $(DOCKER_CMD)
 
-build-pelican: ## Build the latest Flask app
+build-pelican: ## Build the latest pelican image
 	docker build -t pelican -f ./Dockerfile .
 
 dev: DOCKER_CONTAINER_NAME=pelican

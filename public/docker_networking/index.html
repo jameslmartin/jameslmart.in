@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>jameslmart.in - Docker networking, local development, and you</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://jameslmart.in/theme/site.css" />
+
+
+
+
+    <meta name="tags" content="tech" />
+    <meta name="tags" content="docker" />
+
+</head>
+
+<body id="index" class="flex-container">
+        <div id="banner">
+          <div id="sitename">
+                  <h1><a href="https://jameslmart.in/">jameslmart.in</a></h1>
+                  <strong>researcher, engineer, community advocate</strong>
+          </div><!-- /#banner -->
+
+          <nav id="menu"><ul>
+              <span class="menu-page"><a href="https://jameslmart.in/about/">About</a></span>
+              <span class="menu-page"><a href="https://jameslmart.in/projects/">Projects</a></span>
+          </ul></nav><!-- /#menu -->
+        </div>
+<section class="flex-item">
+  <br>
+  <footer class="post-info">
+    <time class="published" datetime="2021-03-06T11:00:00-05:00">
+      Sat 06 March 2021
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="https://jameslmart.in/author/james/">james</a>
+    </address>
+    <div class="category">
+        Category: <a href="https://jameslmart.in/category/tech.html">tech</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="https://jameslmart.in/tag/tech.html">tech</a>
+            <a href="https://jameslmart.in/tag/docker.html">docker</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <header>
+    <h2 class="entry-title">
+      <a href="https://jameslmart.in/docker_networking/" rel="bookmark"
+         title="Permalink to Docker networking, local development, and you">Docker networking, local development, and you</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>I dislike installing and maintaining runtime environments on my local machine. I much prefer isolated environments defined in code so I know exactly what versions of a runtime and exactly what dependencies are installed. You might get what I'm alluding to... Docker makes this dream a nice reality.</p>
+<p>However, when developing locally with multiple containerized applications, there are some gotchas when configuring them to talk to each other. A common pattern I use in local development is creating a containerized database and then a containerized application to read/write from that database. Minimal network configuration is needed if using something like Docker Compose, and the <a href="https://docs.docker.com/compose/networking/">documentation on networking with Compose</a> is quite clear. However, using Compose when iterating on a service can be quite clunky.</p>
+<p>One option to develop locally using Compose is to specify your database and applicaton like so (read the inline ## comments!!):</p>
+<div class="highlight"><pre><span></span><span class="n">version:</span> <span class="s">"3.5"</span>
+<span class="n">services:</span>
+  <span class="n">database:</span>  <span class="c1">## This service name will be a host name you can reach your db at from your server (i.e. postgres://user@database:5432)</span>
+    <span class="n">container_name:</span> <span class="n">postgres</span>  
+    <span class="n">image:</span> <span class="n">postgres:latest</span>
+    <span class="n">env_file:</span> <span class="n">db</span><span class="o">/</span><span class="n">database</span>.<span class="n">conf</span>
+    <span class="n">ports:</span>
+      - <span class="mi">5432</span>:<span class="mi">5432</span>
+    <span class="n">volumes:</span>
+      - <span class="n">db_volume:</span>/<span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">postgresql</span><span class="o">/</span><span class="n">data</span>
+      - <span class="nv">$PWD</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">init</span>/:/<span class="n">docker-entrypoint-initdb</span>.<span class="nb">d</span>
+
+  <span class="n">server:</span>   <span class="c1">## This service name will be the host name you can reach your server at (i.e. http://server:8080)</span>
+    <span class="n">container_name:</span> <span class="n">server</span>   
+    <span class="n">image:</span> <span class="n">server:latest</span>   <span class="c1">## You, of course, have to build this `server` image first</span>
+    <span class="n">env_file:</span> .<span class="n">env</span>
+    <span class="n">ports:</span>
+      - <span class="mi">8080</span>:<span class="mi">8080</span>
+    <span class="n">depends_on:</span>            <span class="c1">## depends_on doesn't always work entirely as expected, especially with Postgres in particular</span>
+      - <span class="n">database</span>
+
+<span class="n">networks:</span>
+  <span class="n">default:</span>
+    <span class="n">external:</span>
+      <span class="n">name:</span> <span class="n">application</span>    <span class="c1">## This `application` network is defined as "external," meaning it must be created before</span>
+
+<span class="n">volumes:</span>
+  <span class="n">db_volume:</span>
+</pre></div>
+<p>With your <code>application</code> network created and your <code>server</code> Docker image built, if all goes well, Compose will create the Postgres container and the server container on the <code>application</code> network. It will make Postgres available on the host name <code>database</code> and make the server available on the hostname <code>server</code> (here's the kicker) <em>within the <code>application</code> Docker network</em>.</p>
+<p>From your local machine, <code>http://server:8080</code> is not accessible. I believe this is the case because the Compose will modify a <code>/etc/hosts</code> file that is <em>shared by the containers of the network</em> but not shared with your own local machine.</p>
+<h3>"Port forwarding is not enough"</h3>
+<p>Luckily, a blog post was already written about what is happening under the hood with Docker networks. <a href="https://pythonspeed.com/articles/docker-connection-refused/">This explanation</a> by Imatar Turner-Trauring is excellent. This post has great, simple diagrams, that explain what happens when applications run in containers. If you do not bind your application to all interfaces, they will be unreachable, even if you forward the ports they are listening on to your local network interface.</p>
+<p class="img"><img alt="image of two network namespaces by Imatar Turner-Trauring" src="https://d33wubrfki0l68.cloudfront.net/eb92be77f9c223f325cc5937105548e9c0c2111e/b72c8/assets/docker-connection-refused/docker-portforward.png"/><span class="caption"></span></p>
+<p>In this diagram, our local machine's network namespace is represented on the left. The WiFi interface is an example of a WiFi network interface that receives packets from the greater internet. We also see the Docker bridge network interface, which sends/receives packets from other Docker namespaces. On the right, a container's namespace is represented. Note that when we run a server in a container, it will bind to the loopback interface at 127.0.0.1 <em>in the container namespace</em>. Note that the browser represented on the left is connecting to the local machine's loopback interface. Despite the Docker bridge network and forwarding the port the server is listening on, it is still unreachable.</p>
+<p>The diagram on the right is roughly equivalent to our Compose network. So how do we reach our server?</p>
+<p>As described in the linked post, we run the server in the container and specify it should listen on all interfaces, or <code>0.0.0.0</code>. For a Flask app, this means running <code>gunicorn</code> or the wsgi interface bound to <code>0.0.0.0</code>.</p>
+<p>For example, a Dockerfile for a Flask app might look like this:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mi">3</span><span class="p">.</span><span class="mi">7</span>
+
+<span class="n">RUN</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="c1">--upgrade pip</span>
+
+<span class="k">COPY</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span> <span class="p">.</span>
+
+<span class="n">RUN</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="p">...</span> <span class="o">#</span> <span class="k">Copy</span> <span class="n">app</span> <span class="n">code</span> <span class="k">and</span> <span class="k">set</span> <span class="n">working</span> <span class="n">directory</span>
+
+<span class="o">#</span> <span class="n">Use</span> <span class="n">Gunicorn</span> <span class="k">to</span> <span class="n">run</span> <span class="n">Flask</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="ss">"gunicorn"</span><span class="p">,</span> <span class="ss">"-b"</span><span class="p">,</span> <span class="ss">"0.0.0.0:8080"</span><span class="p">,</span> <span class="ss">"wsgi:app"</span><span class="p">]</span>
+</pre></div>
+<p>The <code>-b 0.0.0.0:8080</code> flag tells gunicorn to handle requests on all interfaces at port 8080. <code>-b</code> is short for <em>bind</em>. We bind our app to all interfaces within the container network namespace, making it reachable across the Docker bridge.</p>
+<h3>Now that my server is reachable, how can I iterate?</h3>
+<p>One (very slow) option for iterating is to make code changes, shut down the Compose application, rebuild the server container, and recreate the application with Compose.</p>
+<p>Another option is to run a <code>docker exec</code> into the application container, install a text edit tool like <code>vim</code>, and make changes against the application code in the container. If you're running Flask or Django with gunicorn, you can restart the master process with a <code>kill -HUP &lt;master PID&gt;</code>, which will restart the app with your changes in place. Then, if your changes work, you can add them to your local code base and check them in. For local development iterating on a feature? Bleck. For a massive Python system running in a hosted development environment? Feasible. I used to do this a lot when testing small changes on the MapMyFitness Django monolith. Much easier than waiting 20 minutes for a deploy up to the development environment.</p>
+<p>Alternatively, instead of using <code>vim</code> and copy/pasting changes, you could volume mount your local directory with your code into the application container by defining the mount in the Compose file. This might be the quickest way to get started but you still will have to exec into the application container and restart the server manually. If you're using Node.js this might be easier since you could set up a Gulp process to restart the server on changes to specific files.</p>
+  </div><!-- /.entry-content -->
+</section>
+        <hr width="66%" align="left" margin-left="10px">
+        <footer id="contentinfo" class="flex-item-footer">
+                <small>
+                Find me on...
+                <span class="social"><a href="https://github.com/jameslmartin" target="_blank">GitHub</a></span>
+                <span class="social"><a href="https://keybase.io/jlmartin" target="_blank">Keybase</a></span>
+                <span class="social"><a href="https://www.instagram.com/jameslmartin/" target="_blank">Instagram</a></span>
+                <span class="social"><a href="https://www.linkedin.com/in/jamesloganmartin/" target="_blank">LinkedIn</a></span>
+                </br>
+                <i>Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a>,
+                which takes great advantage of <a href="http://python.org" target="_blank">Python</a>.</i>
+                <small>
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

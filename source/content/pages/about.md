@@ -6,7 +6,7 @@ Summary: About this site
 
 ![small picture of james]({static}../immune_images/self2.png)  
 ### Hi, I'm James Martin
-I am a backend software engineer by trade with a research background in Computer Science. Occasionally, I moonlight as a copyeditor for [Superorganism](https://superorg.ca).
+I build software for a living. I am a backend software engineer by trade with a research background in Computer Science. Occasionally, I moonlight as a copyeditor for [Superorganism](https://superorg.ca).
 
 I spend a lot of time away from a keyboard - I'm a big fan of the sun. While living in Central Texas, I started an adventure cycling team with my buddy Cole named Ruffy Tuffy Crew. I'm a bike and gear nerd, love trail running, and cook almost every meal with my partner Ariana. I enjoy eclectic music, simple board games, and athletics - especially basketball and World Tour pro cycling. I love the intersection of design and all of these things.
 
