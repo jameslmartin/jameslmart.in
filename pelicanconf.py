@@ -19,7 +19,7 @@ TAG_URL = ('tag/{name}.html')
 
 PATH = 'content'
 OUTPUT_PATH = 'public'
-STATIC_PATHS = ['images', 'extra/CNAME', 'extra/favicon.ico']
+STATIC_PATHS = ['images', 'immune_images', 'extra/CNAME', 'extra/favicon.ico']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},
   'extra/favicon.ico': {'path': 'favicon.ico'},
 }
