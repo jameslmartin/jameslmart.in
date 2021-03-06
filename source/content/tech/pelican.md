@@ -1,7 +1,7 @@
 Title: Explorations with Pelican
 Date: 2019-10-17 13:41
 Category: tech
-Tags: tech, python, css
+Tags: tech, python, docker, css
 Slug: pelican
 Authors: james
 Summary: Working with Pelican and themes from first principles
