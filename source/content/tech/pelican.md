@@ -12,7 +12,7 @@ First, I'm not a fan of maintaining different development environments on my mac
 
 A diagram of my Docker setup:  
 
-![picture of docker setup]({static}../immune_images/pelican_docker_setup.png)  
+![picture of docker setup]({static}../immune_images/scalable_pelican_docker_setup.png)  
 
 For example, this command can be run when I'm in my running Docker container. This will regenerate the static files and serve the website at `localhost:8000`:
 ```
