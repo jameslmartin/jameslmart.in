@@ -13,7 +13,7 @@ I spend a lot of time away from a keyboard - I'm a big fan of the sun. While liv
 #### Technology
 I'm comfortable working with backend technologies and data pipelines. I specialize in writing portable code for reproducible environments, and I most enjoy working with Docker, Kubernetes, nginx, node, Python, Apache Airflow, and Jupyter. I'm happy tinkering with both digital and physical technologies.
 
-I spent time in an emerging technology research and development group at IBM and as an engineer at Under Armour Connected Fitness. At IBM, I had the opportunity to work with some wonderful, smart people to automate training and deployment of machine learning models. At Under Armour, I worked on almost all parts of two mobile app ecosystems, MapMyFitness and MyFitnessPal. I also product tested and providing feedback for the [HOVR](https://www.runnersworld.com/uk/gear/shoes/a25917965/under-armour-hovr-infinite-review/) line of connected running footwear.
+I spent time in an emerging technology research and development group at IBM and as an engineer at Under Armour Connected Fitness. At IBM, I had the opportunity to work with some wonderful, smart people to automate training and deployment of machine learning models. At Under Armour, I worked on almost all parts of two mobile app ecosystems, MapMyFitness and MyFitnessPal. I also product tested and provided feedback for the [HOVR](https://www.runnersworld.com/uk/gear/shoes/a25917965/under-armour-hovr-infinite-review/) line of connected running footwear.
 
 Most recently, I've joined [Nuvalence](https://nuvalence.io/) as a consultant. I'm currently leading a team providing monitoring tooling for a new serverless platform of a Big Three automobile manufacturer.
 
