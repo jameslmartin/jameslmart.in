@@ -60,25 +60,25 @@
 <p>A diagram of my Docker setup:  </p>
 <p class="scalable-img"><img alt="picture of docker setup" src="https://jameslmart.in/immune_images/scalable_pelican_docker_setup.png"/><span class="caption"> </span></p>
 <p>For example, this command can be run when I'm in my running Docker container. This will regenerate the static files and serve the website at <code>localhost:8000</code>:</p>
-<div class="highlight"><pre><span></span><span class="c">serve: ## Regen and serve blog, to be run in the Docker container</span>
-<span class="c">    pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py</span>
-<span class="c">    pelican -l /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code>serve: ## Regen and serve blog, to be run in the Docker container
+    pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
+    pelican -l /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0
+</code></pre></div>
 <p>I haven't researched a way to get Pelican to watch for changes and auto-regen the static HTML ala nodemon.</p>
 <p>Second, I have had to ramp up when it comes to custom Pelican themes. After being inspired by LOW←TECH MAGAZINE's brilliant custom theme, I attempted to integrate existing themes based on Bootstrap into my own site. I found this to be extraordinarily clunky due to having to rewrite the HTML templates to adhere to Bootstrap's classnames. Though not huge, minified Bootstrap 4 is around 147KB and is a bit more than I need. A landing page and blog roll can be done fairly easily with flexboxes, given you think working with flexboxes is easy.</p>
 <p>I decided to start with the <code>simple</code> theme that is shipped with Pelican - but since it is pre-installed, the code for the templates does not exist in a place where it can be explored and expanded. I cloned the Pelican project into a new directory, copied the code for the simple templates into a local <code>pelican-themes</code> directory, and renamed it <a href="https://github.com/jameslmartin/mod"><code>mod</code></a>.</p>
 <p>The first step to adding custom CSS on top of the simple theme is to create a file in the newly created directory under <code>static/&lt;name_of_stylesheet&gt;.css</code>. If you kept the theme name <code>simple</code> and named your css <code>site.css</code>, your theme's directory structure should look like something like this:</p>
-<div class="highlight"><pre><span></span><span class="err">pelican-themes/</span>
-<span class="err">  └── simple/</span>
-<span class="err">      ├── static/</span>
-<span class="err">      │   └── site.css</span>
-<span class="err">      └── templates/</span>
-<span class="err">          ...</span>
-<span class="err">          base.html</span>
-<span class="err">          article.html</span>
-<span class="err">          index.html</span>
-<span class="err">          ...</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code>pelican-themes/
+  └── simple/
+      ├── static/
+      │   └── site.css
+      └── templates/
+          ...
+          base.html
+          article.html
+          index.html
+          ...
+</code></pre></div>
 <p>The templates that the <code>simple</code> theme give you are a good place to start. You can then modify <code>site.css</code> to add styling to the classes and elements you create or change in the templates. As a heads up, the vanilla themes ship with lots of template HTML files. Decoding them may take a little bit of time, I'm a novice to Jinja templating so it took a fair bit of stepping through the files to get a feel for how things get generated. Hierarchically, <code>base.html</code> is the starting point for all your generated HTML pages. The header and footer of every page is defined here. Your menu, if you have one, is also located here. I found that these were the main components I had to work with. <code>article.html</code> will have the template of most of your posts. Articles are separate from pages. Pages do not have a by-line. "About" pages are an example.</p>
 <p>Another quirk of Pelican I discovered while modifying my theme is that code blocks, like the ones used above, are rendered into divs that do not play nicely with flex boxes. If you notice this page isn't as slick looking on mobile, it's likely because of how code blocks are rendered by Pelican. I'm considering digging deeper into this and submitting a PR.</p>
   </div><!-- /.entry-content -->
