@@ -32,6 +32,8 @@ regen: DOCKER_CMD=pelican /home/app/source/content -o /home/app/public -s /home/
 regen: run-docker
 regen: ## Just regen files
 
+prepare-for-publish: 
+	pelican /home/app/source/content -o /home/app/public -s /home/app/publishconf.py
 
 serve: ## Serve blog with livereload, to be run in the Docker container
 	pelican -lr /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py -p 8000 -b 0.0.0.0
