@@ -93,8 +93,8 @@
 <span class="n">dev</span><span class="o">:</span><span class="w"> </span><span class="c1">## Run Docker image for Pelican to generate local content</span>
 </code></pre></div>
 <p>A <code>make dev</code> will now stand up and start a bash shell in a Python environment with Pelican and any dependencies installed; themes and plugins will be mounted horizontally to the blog content. Next, I modified the Pelican config at <code>pelicanconf.py</code> to specify the paths of the plugins and enable the ones that are mounted. I needed to add these lines, as well as a few others specific to the dither plugin:</p>
-<div class="highlight"><pre><span></span><code>PLUGIN_PATHS = ['/home/plugins']
-PLUGINS = ['dither','addressable_paragraphs']
+<div class="highlight"><pre><span></span><code><span class="nx">PLUGIN_PATHS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="err">'</span><span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">plugins</span><span class="err">'</span><span class="p">]</span>
+<span class="nx">PLUGINS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="err">'</span><span class="nx">dither</span><span class="sc">','</span><span class="nx">addressable_paragraphs</span><span class="err">'</span><span class="p">]</span>
 </code></pre></div>
 <p>After a little hacking on the dither plugin, I now can either choose which images to dither, as well. Transparent diagrams are ruined by dithering but the plugin is incredibly useful for minimizing the footprint of the web pages.</p>
 <h3>TODO</h3>
