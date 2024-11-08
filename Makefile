@@ -20,20 +20,14 @@ build-pelican: ## Build the latest pelican image
 	docker build -t pelican -f ./Dockerfile .
 
 dev: DOCKER_CONTAINER_NAME=pelican
-dev: DOCKER_OPTS=-it -v `pwd`:/home/app/ \
-	-v `pwd`/../pelican-themes:/home/themes \
-	-v `pwd`/../pelican-plugins:/home/plugins \
-	--workdir /app/
+dev: DOCKER_OPTS=-it -v `pwd`:/home/app/
 dev: DOCKER_PORTS=-p $(APP_PORT):8000
 dev: DOCKER_CMD=bash
 dev: run-docker
 dev: ## Run Docker image for Pelican to generate local content
 
 regen: DOCKER_CONTAINER_NAME=pelican
-regen: DOCKER_OPTS=-t -v `pwd`:/home/app/ \
-	-v `pwd`/../pelican-themes:/home/themes \
-	-v `pwd`/../pelican-plugins:/home/plugins \
-	--workdir /app/
+regen: DOCKER_OPTS=-t -v `pwd`:/home/app/ 
 regen: DOCKER_CMD=pelican /home/app/source/content -o /home/app/public -s /home/app/pelicanconf.py
 regen: run-docker
 regen: ## Just regen files

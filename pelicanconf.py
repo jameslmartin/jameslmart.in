@@ -7,7 +7,7 @@ SITENAME = 'jameslmart.in'
 SITEURL = 'https://jameslmart.in'
 SITESUBTITLE = 'researcher, engineer, community advocate'
 
-THEME = '/home/themes/mod'
+THEME = '/home/app/themes/mod'
 
 ARTICLE_URL = ('{slug}/')
 ARTICLE_SAVE_AS = ('{slug}/index.html')
@@ -23,7 +23,7 @@ STATIC_PATHS = ['images', 'immune_images', 'extra/CNAME', 'extra/favicon.ico']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},
   'extra/favicon.ico': {'path': 'favicon.ico'},
 }
-PLUGIN_PATHS = ['/home/plugins']
+PLUGIN_PATHS = ['/home/app/plugins']
 PLUGINS = ['dither','addressable_paragraphs']
 
 TIMEZONE = 'America/New_York'
