@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>jameslmart.in - Impossible Day at RC, LLM tooling crash course</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://jameslmart.in/theme/site.css" />
+        <link href="https://jameslmart.in/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="jameslmart.in Full Atom Feed" />
+
+
+
+
+    <meta name="tags" content="tech" />
+    <meta name="tags" content="llm" />
+    <meta name="tags" content="langchain" />
+    <meta name="tags" content="recurse" />
+
+</head>
+
+<body id="index" class="flex-container">
+        <div id="banner">
+          <div id="sitename">
+                  <h1><a href="https://jameslmart.in/">jameslmart.in</a></h1>
+                  <strong>researcher, engineer, community advocate</strong>
+          </div><!-- /#banner -->
+
+          <nav id="menu"><ul>
+              <span class="menu-page"><a href="https://jameslmart.in/about/">About</a></span>
+              <span class="menu-page"><a href="https://jameslmart.in/projects/">Projects</a></span>
+          </ul></nav><!-- /#menu -->
+        </div>
+<section class="flex-item">
+  <br>
+  <footer class="post-info">
+    <time class="published" datetime="2024-11-20T12:50:00-05:00">
+      Wed 20 November 2024
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="https://jameslmart.in/author/james/">james</a>
+    </address>
+    <div class="category">
+        Category: <a href="https://jameslmart.in/category/recurse.html">recurse</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="https://jameslmart.in/tag/tech.html">tech</a>
+            <a href="https://jameslmart.in/tag/llm.html">llm</a>
+            <a href="https://jameslmart.in/tag/langchain.html">langchain</a>
+            <a href="https://jameslmart.in/tag/recurse.html">recurse</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <header>
+    <h2 class="entry-title">
+      <a href="https://jameslmart.in/llm-crash-course-one/" rel="bookmark"
+         title="Permalink to Impossible Day at RC, LLM tooling crash course">Impossible Day at RC, LLM tooling crash course</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>For Impossible Day, I decided to attempt an entire research project that I've been kicking around. Document chat is 100% a solved problem. Modern "AI" tools can retrieve and summarize information from pretty much anything you can digitize. Most LLMs like the ones behind Chat-GPT or Llama are also trained on such huge corpuses of books and information, they probably already encompass whatever an individual has in their digital library.</p>
+<p>I have a small collection of PDFs and ePub format books that I like to revisit or skim when I'm toying with a problem. While I prefer more analog methods of lookup, I've been curious how I might perform something like retrieval-augmented generation (<a href="https://en.wikipedia.org/wiki/Retrieval-augmented_generation">RAG</a>) or document chat with my own library without the use of something like OpenAI or some other existing product.</p>
+<p>What would it take to "homebrew" one of these pipelines? I decided to travel back to May 2015 to the semester of grad school I took a formal Machine Learning course to revisit matrix multiplication, mean pooling, and vectorization. My first objective was to generate embeddings for <a href="https://en.wikipedia.org/wiki/Introduction_to_Algorithms">Introduction to Algorithms</a>, aka CLRS, to eventually perform RAG on basic algorithm/data structure related questions.</p>
+<p>My main intention of this project was to familiarize myself with the ever evolving state of LLM tooling rather than create something novel. I have a cursory understanding of some of the underlying concepts of LLMs, including embedding spaces and basic neural net architecture, but it's been almost a decade since I sat down and implemented any of it myself. I also knew that my first step would be to perform some sort of document chunking and convert those chunks to embeddings. I've found there are lots of tools off the shelf that can handle this entire process of storing embeddings for you, including the encoding of the document text itself.</p>
+<p>I quickly found that:
+1. There exists tools to read PDFs (or any document for that matter) into a Pydantic model that other tooling uses
+2. There exists tools to then store those documents <em>as embeddings</em> in a vector database, removing the need to create the embeddings beforehand.</p>
+<p>Langchain has tooling to do both (1) and (2) and make it all play nicely with each other. However, langchain can box you into using text embedding models or tools from OpenAI or Cohere, which I felt was unnecessary, especially if you could just download a smaller but comparable model from Hugging Face and load it locally (given enough local compute, of course). I also wanted to explore (2) more deeply rather than just use some off-the-shelf-tool (like Pinecone or ChromaDB) and wanted to look into what it would take to create the embeddings, then store those embeddings myself in a vector database like pgvector. I knew to create those embeddings myself, I needed to break the problem down into a few more steps:</p>
+<ol>
+<li>Create semantically rich document chunks by including metadata and linking to previous and next chunks. </li>
+<li>Use a pretrained LLM to tokenize the document chunks</li>
+<li>Use a pretrained LLM to encode the tokenized chunks into the embedding space</li>
+<li>Run a Postgres database locally (likely in a Docker container) and create a migration for the schema</li>
+<li>Write a db client/db model and store embeddings in the vector database</li>
+</ol>
+<p>The end goal would be to populate a locally running postgres database with embeddings. I work enough with postgres to know how to roll my own database client using something like psycopg or SqlAlchemy, but for Impossible Day, this seemed pretty tedious and not a good use of time. I also wasn't entirely clear on what the database model should actually look like, either. Enter another langchain tool, PGVector! This cut out so much time but learned that PGVector does not just store the vectors post-embedding, it will also create the embeddings for you. Langchain even includes a command to spin up a postgres Docker container in their documentation. After creating the container, it was time to get a connection to the database. The interface to spinning up a PGVector database looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langchain_postgres.vectorstores</span> <span class="kn">import</span> <span class="n">PGVector</span>
+
+<span class="n">collection_name</span> <span class="o">=</span> <span class="s2">"librarian"</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="s2">"postgresql+psycopg://langchain:langchain@localhost:6024/langchain"</span>
+
+<span class="n">vector_store</span> <span class="o">=</span> <span class="n">PGVector</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span> <span class="c1"># We'll need to define this!!</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span><span class="p">,</span>
+    <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+    <span class="n">use_jsonb</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>The <code>embeddings</code> parameter to PGVector has to be an implementation of this <a href="https://python.langchain.com/api_reference/_modules/langchain_core/embeddings/embeddings.html#Embeddings">class</a>. Off the shelf, you can use OpenAI embeddings or Cohere embeddings. Or... if you're following my path and want to use a model you have locally, you can implement the class yourself.</p>
+<p>So first, I needed a tokenizer and a text embedding model:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+<span class="kn">from</span> <span class="nn">langchain.document_loaders</span> <span class="kn">import</span> <span class="n">PyPDFLoader</span> <span class="c1">#, PyPDFDirectoryLoader</span>
+
+<span class="n">nomic_1_5</span> <span class="o">=</span> <span class="s2">"nomic-ai/nomic-embed-text-v1.5"</span>
+<span class="n">embeddings_model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">nomic_1_5</span><span class="p">,</span> <span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">nomic_1_5</span><span class="p">)</span>
+<span class="n">embeddings_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+</code></pre></div>
+<p>I'm pretty new to AutoModel and AutoTokenizers, so I spent a lot of time struggling to figure out what to do with the instances they return, but eventually I reached implementing my own Embeddings class. I extended the abstract base class linked above:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langchain_core.embeddings.embeddings</span> <span class="kn">import</span> <span class="n">Embeddings</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+
+<span class="k">def</span> <span class="nf">mean_pooling</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">):</span>
+    <span class="n">token_embeddings</span> <span class="o">=</span> <span class="n">model_output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">input_mask_expanded</span> <span class="o">=</span> <span class="n">attention_mask</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">token_embeddings</span><span class="o">.</span><span class="n">size</span><span class="p">())</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">token_embeddings</span> <span class="o">*</span> <span class="n">input_mask_expanded</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">input_mask_expanded</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">CustomEmbeddings</span><span class="p">(</span><span class="n">Embeddings</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span>
+
+    <span class="k">def</span> <span class="nf">embed_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># https://huggingface.co/nomic-ai/nomic-embed-text-v1.5</span>
+        <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
+            <span class="n">encoded_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">'pt'</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">model_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">(</span><span class="o">**</span><span class="n">encoded_chunk</span><span class="p">)</span>
+            <span class="n">pooled_embeddings</span> <span class="o">=</span> <span class="n">mean_pooling</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">encoded_chunk</span><span class="p">[</span><span class="s1">'attention_mask'</span><span class="p">])</span>
+            <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">pooled_embeddings</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">embeddings</span>
+
+    <span class="k">def</span> <span class="nf">embed_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="n">Document</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">([</span><span class="n">text</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<p>With this <code>CustomEmbeddings</code>, I created an instance passing my local model and tokenizer. I could then pass that instance to my PGVector database like so:</p>
+<div class="highlight"><pre><span></span><code><span class="n">embeddings_for_pgvector</span> <span class="o">=</span> <span class="n">CustomEmbeddings</span><span class="p">(</span><span class="n">embeddings_model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">)</span>
+
+<span class="n">vector_store</span> <span class="o">=</span> <span class="n">PGVector</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="o">=</span><span class="n">embeddings_for_pgvector</span><span class="p">,</span> <span class="c1"># Aye, there's the rub!</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span><span class="p">,</span>
+    <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+    <span class="n">use_jsonb</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>And then things... just work!!?? </p>
+<div class="highlight"><pre><span></span><code><span class="c1"># assuming documents is a list of [Document] objects</span>
+<span class="n">vector_store</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">uuid4</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">test_batch</span><span class="p">])</span>
+</code></pre></div>
+<p>I stepped through the langchain PGVector code enough to make sense of the signature:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">embed_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+    <span class="o">...</span>
+</code></pre></div>
+<p><code>texts</code> in this case is the <code>page_content</code> pulled off the core Pydantic <code>Document</code> model that the langchain document loaders use. So the custom embeddings class doesn't have much control in creating more semantically rich chunks before creating embeddings, as it only has access to the textual page content. Though in this research project's case, we are only trying to store embeddings from a single document, so everything in the <code>texts</code> list will be from a single document.</p>
+<p>One gotcha I found was that the insert that langchain does under the hood (with SqlAlchemy) can only convert a tensor with "one element" to a scalar. Using <code>normalize</code> on the embeddings and specifying <code>dim=1</code> on the embeddings that have been run through <code>mean_pooling</code> did yield a tensor with one dimension, but for some reason PGVector couldn't handle it. I used torch.flatten to reduce the tensor to a vector. In theory, this shouldn't effect the values or dimension of the vector, but I haven't tested it!</p>
+<p>This did make PGVector happy, and I loaded all 1300 chunks of CLRS into a vector database. Then... a quick test!</p>
+<div class="highlight"><pre><span></span><code><span class="n">vector_store</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="s1">'efficiency of insert binary search tree'</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>Yields some documents related to the query:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">Document</span><span class="o">(</span><span class="nt">id</span><span class="o">=</span><span class="s1">'4c639a6a-1d8d-41e6-8f32-a4cec04d8290'</span><span class="o">,</span><span class="w"> </span><span class="nt">metadata</span><span class="o">=</span><span class="p">{</span><span class="err">'page':</span><span class="w"> </span><span class="err">314,</span><span class="w"> </span><span class="err">'source':</span><span class="w"> </span><span class="err">'../knowledge_base/CLRS.pdf'</span><span class="p">}</span><span class="o">,</span><span class="w"> </span><span class="nt">page_content</span><span class="o">=</span><span class="s1">'294 Chapter 12 Binary Search Trees\n12.2-8\nProve that no matter what node we start at in a height- h binary search tree, k\nsuccessive calls to TREE -SUCCESSOR take O.k Ch/ time.\n12.2-9\nLet T be a binary search tree whose keys are distinct, letx be a leaf node, and lety\nbe its parent. Show that y:key is either the smallest key in T larger than x: key or\nthe largest key in T smaller than x: key.\n12.3 Insertion and deletion\nThe operations of insertion and deletion cause the dynamic set represented by a\nbinary search tree to change. The data structure must be modiﬁed to reﬂect this\nchange, but in such a way that the binary-search-tree property continues to hold.\nAs we shall see, modifying the tree to insert a new element is relatively straight-\nforward, but handling deletion is somewhat more intricate.\nInsertion\nTo insert a new value /ETBinto a binary search tree T ,w eu s et h ep r o c e d u r eTREE -\nINSERT .T h e p r o c e d u r e t a k e s a n o d e´ for which ´: key D /ETB, ´: left D NIL ,\nand ´: right DNIL .I tm o d i ﬁ e sT and some of the attributes of´ in such a way that\nit inserts ´ into an appropriate position in the tree.\nTREE -INSERT .T; ´/\n1 y DNIL\n2 x DT:root\n3 while x €NIL\n4 y Dx\n5 if ´: key &lt;x :key\n6 x Dx: left\n7 else x Dx: right\n8 ´: p Dy\n9 if y == NIL\n10 T:root D´ // tree T was empty\n11 elseif ´: key &lt;y :key\n12 y:left D´\n13 else y:right D´'</span><span class="o">)</span>
+</code></pre></div>
+<p>Clearly, the document loader needs some optimizing and we could clean up the text in the document chunks but we're pretty close!</p>
+  </div><!-- /.entry-content -->
+</section>
+        <hr width="66%" align="left" margin-left="10px">
+        <footer id="contentinfo" class="flex-item-footer">
+                <small>
+                Find me on...
+                <span class="social"><a href="https://github.com/jameslmartin" target="_blank">GitHub</a></span>
+                <span class="social"><a href="https://keybase.io/jlmartin" target="_blank">Keybase</a></span>
+                <span class="social"><a href="https://www.instagram.com/jameslmartin/" target="_blank">Instagram</a></span>
+                <span class="social"><a href="https://www.linkedin.com/in/jamesloganmartin/" target="_blank">LinkedIn</a></span>
+                </br>
+                <i>Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a>,
+                which takes great advantage of <a href="http://python.org" target="_blank">Python</a>.</i>
+                <small>
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
