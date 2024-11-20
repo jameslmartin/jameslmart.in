@@ -12,6 +12,7 @@ Though week one was a blur, I'll count it as a success. I'm still ingesting a ma
 2. Getting this website up to date and adding Atom feeds and joining the RC blog aggregator.
 
 Intentions I want to set and notes for the week include: 
+
 - Being public with notetaking, being okay just sharing, but not letting note taking become the final output. https://sashachapin.substack.com/p/notes-against-note-taking-systems
 - Read The I in Internet by Jia Tolentino. Is this blog performance? Is attending the Recurse Center performative?
 https://docdrop.org/ocr/download/Tolentino-I-in-the-Internet-0ai0d_ocr.pdf
