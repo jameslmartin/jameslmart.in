@@ -1,7 +1,7 @@
 Title: Starting at the Recurse Center
 Date: 2024-11-08 12:11
-Category: tech
-Tags: tech
+Category: recurse
+Tags: tech, recurse
 Slug: recurse-week-one
 Authors: james
 Summary: Week one at the Recurse Center was a blur
