@@ -125,7 +125,18 @@ vector_store.similarity_search('efficiency of insert binary search tree', k=10)
 
 Yields some documents related to the query:
 ```
-Document(id='4c639a6a-1d8d-41e6-8f32-a4cec04d8290', metadata={'page': 314, 'source': '../knowledge_base/CLRS.pdf'}, page_content='294 Chapter 12 Binary Search Trees\n12.2-8\nProve that no matter what node we start at in a height- h binary search tree, k\nsuccessive calls to TREE -SUCCESSOR take O.k Ch/ time.\n12.2-9\nLet T be a binary search tree whose keys are distinct, letx be a leaf node, and lety\nbe its parent. Show that y:key is either the smallest key in T larger than x: key or\nthe largest key in T smaller than x: key.\n12.3 Insertion and deletion\nThe operations of insertion and deletion cause the dynamic set represented by a\nbinary search tree to change. The data structure must be modiﬁed to reﬂect this\nchange, but in such a way that the binary-search-tree property continues to hold.\nAs we shall see, modifying the tree to insert a new element is relatively straight-\nforward, but handling deletion is somewhat more intricate.\nInsertion\nTo insert a new value /ETBinto a binary search tree T ,w eu s et h ep r o c e d u r eTREE -\nINSERT .T h e p r o c e d u r e t a k e s a n o d e´ for which ´: key D /ETB, ´: left D NIL ,\nand ´: right DNIL .I tm o d i ﬁ e sT and some of the attributes of´ in such a way that\nit inserts ´ into an appropriate position in the tree.\nTREE -INSERT .T; ´/\n1 y DNIL\n2 x DT:root\n3 while x €NIL\n4 y Dx\n5 if ´: key <x :key\n6 x Dx: left\n7 else x Dx: right\n8 ´: p Dy\n9 if y == NIL\n10 T:root D´ // tree T was empty\n11 elseif ´: key <y :key\n12 y:left D´\n13 else y:right D´')
+Document(id='4c639a6a-1d8d-41e6-8f32-a4cec04d8290', metadata={'page': 314, 'source': '../knowledge_base/CLRS.pdf'}, page_content='294
+ Chapter 12 Binary Search Trees\n12.2-8\nProve that no matter what node we start at in a height- h binary search tree, k\nsuccessive
+ calls to TREE -SUCCESSOR take O.k Ch/ time.\n12.2-9\nLet T be a binary search tree whose keys are distinct, letx be a leaf node, and 
+ lety\nbe its parent. Show that y:key is either the smallest key in T larger than x: key or\nthe largest key in T smaller than x: key.
+ \n12.3 Insertion and deletion\nThe operations of insertion and deletion cause the dynamic set represented by a\nbinary search tree 
+ to change. The data structure must be modiﬁed to reﬂect this\nchange, but in such a way that the binary-search-tree property 
+ continues to hold.\nAs we shall see, modifying the tree to insert a new element is relatively straight-\nforward, but handling 
+ deletion is somewhat more intricate.\nInsertion\nTo insert a new value /ETBinto a binary search tree T ,w eu s et h ep r o c e d u r 
+ eTREE -\nINSERT .T h e p r o c e d u r e t a k e s a n o d e´ for which ´: key D /ETB, ´: left D NIL ,\nand ´: right DNIL .I tm o d 
+ i ﬁ e sT and some of the attributes of´ in such a way that\nit inserts ´ into an appropriate position in the tree.\nTREE -INSERT .T; 
+ ´/\n1 y DNIL\n2 x DT:root\n3 while x €NIL\n4 y Dx\n5 if ´: key <x :key\n6 x Dx: left\n7 else x Dx: right\n8 ´: p Dy\n9 if y == 
+ NIL\n10 T:root D´ // tree T was empty\n11 elseif ´: key <y :key\n12 y:left D´\n13 else y:right D´')
 ```
 
 Clearly, the document loader needs some optimizing and we could clean up the text in the document chunks but we're pretty close!
