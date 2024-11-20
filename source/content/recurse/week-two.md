@@ -8,9 +8,10 @@ Summary: Intention setting for week two at Recurse Center
 
 Though week one was a blur, I'll count it as a success. I'm still ingesting a massive amount of new context, being dropped into a pool of very smart people who are all working and exploring interesting technology has been overwhelming. My two biggest wins from last week were:
 
-- Actually getting started with leetcode problems. I've been able to iterate quickly on solving the problems, even if actually solving problems has been slow. I've solved two medium level leetcode problems and come agonizing close to two others in so many days.
-- Getting this website up to date and adding Atom feeds and joining the RC blog aggregator.
+1. Actually getting started with leetcode problems. I've been able to iterate quickly on solving the problems, even if actually solving problems has been slow. I've solved two medium level leetcode problems and come agonizing close to two others in so many days.
+2. Getting this website up to date and adding Atom feeds and joining the RC blog aggregator.
 
+Intentions I want to set and notes for the week include:
 - Being public with notetaking, being okay just sharing, but not letting note taking become the final output. https://sashachapin.substack.com/p/notes-against-note-taking-systems
 - Read The I in Internet by Jia Tolentino. Is this blog performance? Is attending the Recurse Center performative?
 https://docdrop.org/ocr/download/Tolentino-I-in-the-Internet-0ai0d_ocr.pdf
